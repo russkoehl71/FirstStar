@@ -1,0 +1,141 @@
+.habit-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--habit-color);
+  overflow: hidden;
+  transition: transform 0.15s;
+}
+
+.habit-card:hover {
+  transform: translateY(-1px);
+}
+
+.habit-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+}
+
+.check-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  color: white;
+}
+
+.check-btn:hover {
+  border-color: var(--habit-color);
+}
+
+.check-btn.checked {
+  background: var(--habit-color);
+  border-color: var(--habit-color);
+}
+
+.habit-emoji {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.habit-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.habit-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.2s;
+}
+
+.habit-name.completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.streak-info {
+  display: flex;
+  gap: 10px;
+  font-size: 0.75rem;
+}
+
+.streak {
+  color: var(--text-muted);
+}
+
+.streak.current {
+  color: var(--text-secondary);
+}
+
+.habit-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.menu-btn {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  padding: 4px;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.menu-btn:hover {
+  color: var(--text-secondary);
+}
+
+.delete-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(248, 113, 113, 0.08);
+  border-top: 1px solid rgba(248, 113, 113, 0.15);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.delete-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.cancel-delete {
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  border-radius: 6px;
+  color: var(--text-secondary);
+}
+
+.cancel-delete:hover {
+  background: var(--bg-tertiary);
+}
+
+.confirm-delete {
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: #f87171;
+  color: white;
+  font-weight: 600;
+}
+
+.confirm-delete:hover {
+  opacity: 0.9;
+}

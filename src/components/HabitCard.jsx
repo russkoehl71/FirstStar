@@ -1,0 +1,83 @@
+import { useState } from 'react'
+import { ProgressRing } from '../App'
+import './HabitCard.css'
+
+export default function HabitCard({ habit, onToggle, onDelete }) {
+  const [showDelete, setShowDelete] = useState(false)
+  const weekProgress = getWeekProgress(habit)
+
+  return (
+    <div className="habit-card" style={{ '--habit-color': habit.color }}>
+      <div className="habit-main">
+        <button
+          className={`check-btn ${habit.isCompletedToday ? 'checked' : ''}`}
+          onClick={onToggle}
+          aria-label={habit.isCompletedToday ? 'Uncheck habit' : 'Check habit'}
+        >
+          {habit.isCompletedToday ? (
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M5 10l3.5 3.5L15 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          ) : null}
+        </button>
+
+        <span className="habit-emoji">{habit.emoji}</span>
+        <div className="habit-info">
+          <span className={`habit-name ${habit.isCompletedToday ? 'completed' : ''}`}>
+            {habit.name}
+          </span>
+          <div className="streak-info">
+            <span className="streak current">
+              🔥 {habit.currentStreak}d
+            </span>
+            <span className="streak best">
+              ⭐ {habit.longestStreak}d best
+            </span>
+          </div>
+        </div>
+
+        <div className="habit-right">
+          <ProgressRing
+            progress={weekProgress}
+            size={40}
+            strokeWidth={3}
+            color={habit.color}
+          />
+          <button
+            className="menu-btn"
+            onClick={() => setShowDelete(!showDelete)}
+            aria-label="Habit options"
+          >
+            ···
+          </button>
+        </div>
+      </div>
+
+      {showDelete && (
+        <div className="delete-bar">
+          <span>Delete this habit?</span>
+          <div className="delete-actions">
+            <button className="cancel-delete" onClick={() => setShowDelete(false)}>
+              Cancel
+            </button>
+            <button className="confirm-delete" onClick={onDelete}>
+              Delete
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function getWeekProgress(habit) {
+  const today = new Date()
+  let completed = 0
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(today)
+    d.setDate(d.getDate() - i)
+    const key = d.toISOString().split('T')[0]
+    if (habit.completedDates.includes(key)) completed++
+  }
+  return completed / 7
+}
