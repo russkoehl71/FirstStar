@@ -51,7 +51,7 @@ export default function HabitCard({ habit, onToggle, onSetTime, onDelete }) {
 
         <span className="habit-emoji">{habit.emoji}</span>
         <div className="habit-info">
-          <span className={`habit-name ${habit.isCompletedToday ? 'completed' : ''}`}>
+          <span className="habit-name">
             {habit.name}
           </span>
           <div className="streak-info">
