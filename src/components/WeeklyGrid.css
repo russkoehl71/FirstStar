@@ -185,12 +185,25 @@
 @media (max-width: 600px) {
   .grid-header,
   .grid-row {
-    grid-template-columns: 1fr repeat(7, 40px) 44px;
-    padding: 8px 10px;
+    grid-template-columns: minmax(60px, 1fr) repeat(7, 32px) 38px;
+    padding: 6px 6px;
+    gap: 1px;
   }
 
   .grid-cell {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .grid-name {
+    font-size: 0.75rem;
+  }
+
+  .grid-emoji {
+    font-size: 0.85rem;
+  }
+
+  .grid-pct {
+    font-size: 0.7rem;
   }
 }
