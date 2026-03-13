@@ -2,11 +2,18 @@ import { useState } from 'react'
 import { ProgressRing } from '../App'
 import './HabitCard.css'
 
+function localDateKey(date) {
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, '0')
+  const d = String(date.getDate()).padStart(2, '0')
+  return `${y}-${m}-${d}`
+}
+
 export default function HabitCard({ habit, onToggle, onSetTime, onDelete }) {
   const [showDelete, setShowDelete] = useState(false)
   const weekProgress = getWeekProgress(habit)
   const isTimed = habit.type === 'timed'
-  const todayMinutes = isTimed ? (habit.timeEntries[new Date().toISOString().split('T')[0]] || 0) : 0
+  const todayMinutes = isTimed ? (habit.timeEntries[localDateKey(new Date())] || 0) : 0
   const totalMinutes = isTimed ? Object.values(habit.timeEntries).reduce((s, m) => s + m, 0) : 0
 
   return (
@@ -102,7 +109,7 @@ function getWeekProgress(habit) {
   for (let i = 0; i < 7; i++) {
     const d = new Date(today)
     d.setDate(d.getDate() - i)
-    const key = d.toISOString().split('T')[0]
+    const key = localDateKey(d)
     if (habit.completedDates.includes(key)) completed++
   }
   return completed / 7

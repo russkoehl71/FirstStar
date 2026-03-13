@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import './WeeklyGrid.css'
 
+function localDateKey(date) {
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, '0')
+  const d = String(date.getDate()).padStart(2, '0')
+  return `${y}-${m}-${d}`
+}
+
 function getWeekDays() {
   const days = []
   const today = new Date()
@@ -11,8 +18,8 @@ function getWeekDays() {
   for (let i = 0; i < 7; i++) {
     const d = new Date(sunday)
     d.setDate(sunday.getDate() + i)
-    const key = d.toISOString().split('T')[0]
-    const todayKey = today.toISOString().split('T')[0]
+    const key = localDateKey(d)
+    const todayKey = localDateKey(today)
     days.push({
       key,
       label: d.toLocaleDateString('en', { weekday: 'short' }),

@@ -24,7 +24,7 @@ export default function HistoryView({ habits }) {
   const [selectedHabitId, setSelectedHabitId] = useState('all')
 
   const { startPad, totalDays } = getMonthData(year, month)
-  const todayKey = today.toISOString().split('T')[0]
+  const todayKey = dateKey(today.getFullYear(), today.getMonth(), today.getDate())
 
   function prevMonth() {
     if (month === 0) { setMonth(11); setYear(y => y - 1) }
