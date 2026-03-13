@@ -139,3 +139,43 @@
 .confirm-delete:hover {
   opacity: 0.9;
 }
+
+.time-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.time-input {
+  width: 44px;
+  height: 28px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.85rem;
+  padding: 0 2px;
+  color: var(--text-primary);
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.time-input::-webkit-inner-spin-button,
+.time-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.time-input:focus {
+  border-color: var(--habit-color);
+}
+
+.time-unit {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.total-time {
+  color: var(--text-secondary);
+}

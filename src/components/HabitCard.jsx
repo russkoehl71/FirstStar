@@ -2,24 +2,45 @@ import { useState } from 'react'
 import { ProgressRing } from '../App'
 import './HabitCard.css'
 
-export default function HabitCard({ habit, onToggle, onDelete }) {
+export default function HabitCard({ habit, onToggle, onSetTime, onDelete }) {
   const [showDelete, setShowDelete] = useState(false)
   const weekProgress = getWeekProgress(habit)
+  const isTimed = habit.type === 'timed'
+  const todayMinutes = isTimed ? (habit.timeEntries[new Date().toISOString().split('T')[0]] || 0) : 0
+  const totalMinutes = isTimed ? Object.values(habit.timeEntries).reduce((s, m) => s + m, 0) : 0
 
   return (
     <div className="habit-card" style={{ '--habit-color': habit.color }}>
       <div className="habit-main">
-        <button
-          className={`check-btn ${habit.isCompletedToday ? 'checked' : ''}`}
-          onClick={onToggle}
-          aria-label={habit.isCompletedToday ? 'Uncheck habit' : 'Check habit'}
-        >
-          {habit.isCompletedToday ? (
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M5 10l3.5 3.5L15 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          ) : null}
-        </button>
+        {isTimed ? (
+          <div className="time-input-wrap">
+            <input
+              type="number"
+              className="time-input"
+              min="0"
+              max="999"
+              value={todayMinutes || ''}
+              placeholder="0"
+              onChange={e => {
+                const val = parseInt(e.target.value) || 0
+                onSetTime(Math.max(0, Math.min(999, val)))
+              }}
+            />
+            <span className="time-unit">min</span>
+          </div>
+        ) : (
+          <button
+            className={`check-btn ${habit.isCompletedToday ? 'checked' : ''}`}
+            onClick={onToggle}
+            aria-label={habit.isCompletedToday ? 'Uncheck habit' : 'Check habit'}
+          >
+            {habit.isCompletedToday ? (
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M5 10l3.5 3.5L15 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            ) : null}
+          </button>
+        )}
 
         <span className="habit-emoji">{habit.emoji}</span>
         <div className="habit-info">
@@ -33,6 +54,11 @@ export default function HabitCard({ habit, onToggle, onDelete }) {
             <span className="streak best">
               ⭐ {habit.longestStreak}d best
             </span>
+            {isTimed && (
+              <span className="streak total-time">
+                🕐 {totalMinutes}m total
+              </span>
+            )}
           </div>
         </div>
 

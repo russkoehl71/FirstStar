@@ -2,8 +2,8 @@ import { useState } from 'react'
 import './AddHabitForm.css'
 
 const EMOJI_OPTIONS = [
-  '💪', '📚', '🏃', '💧', '🧘', '✍️', '🎵', '💤',
-  '🥗', '🧹', '💊', '🎯', '🌅', '🚶', '🧠', '⭐',
+  '💪', '📚', '🏃', '💧', '🧘', '✍️', '💤',
+  '🥗', '🧹', '💊', '🎯', '🚶', '🧠', '⭐', '✝️', '🚴',
 ]
 
 export default function AddHabitForm({ onAdd }) {
@@ -15,7 +15,7 @@ export default function AddHabitForm({ onAdd }) {
     e.preventDefault()
     const trimmed = name.trim()
     if (!trimmed) return
-    onAdd(trimmed, emoji)
+    onAdd(trimmed, emoji, emoji === '🚴' ? 'timed' : 'check')
     setName('')
     setEmoji('💪')
     setIsOpen(false)

@@ -3,10 +3,11 @@ import { useHabits } from './useHabits'
 import HabitCard from './components/HabitCard'
 import AddHabitForm from './components/AddHabitForm'
 import WeeklyGrid from './components/WeeklyGrid'
+import HistoryView from './components/HistoryView'
 import './App.css'
 
 function App() {
-  const { habits, addHabit, deleteHabit, toggleDay, getDateKey } = useHabits()
+  const { habits, addHabit, deleteHabit, toggleDay, setTime, getDateKey } = useHabits()
   const [view, setView] = useState('cards')
 
   const today = getDateKey()
@@ -53,6 +54,12 @@ function App() {
             >
               Weekly
             </button>
+            <button
+              className={`toggle-btn ${view === 'history' ? 'active' : ''}`}
+              onClick={() => setView('history')}
+            >
+              History
+            </button>
           </div>
         )}
 
@@ -64,12 +71,15 @@ function App() {
                 habit={habit}
                 today={today}
                 onToggle={() => toggleDay(habit.id, today)}
+                onSetTime={(minutes) => setTime(habit.id, today, minutes)}
                 onDelete={() => deleteHabit(habit.id)}
               />
             ))}
           </div>
+        ) : view === 'weekly' ? (
+          <WeeklyGrid habits={habits} toggleDay={toggleDay} setTime={setTime} />
         ) : (
-          <WeeklyGrid habits={habits} toggleDay={toggleDay} />
+          <HistoryView habits={habits} />
         )}
 
         {totalHabits === 0 && (

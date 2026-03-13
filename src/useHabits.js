@@ -72,13 +72,15 @@ export function useHabits() {
     saveHabits(habits)
   }, [habits])
 
-  const addHabit = useCallback((name, emoji) => {
+  const addHabit = useCallback((name, emoji, type = 'check') => {
     setHabits(prev => [...prev, {
       id: Date.now().toString(),
       name,
       emoji,
+      type,
       color: COLORS[prev.length % COLORS.length],
       completedDates: [],
+      timeEntries: {},
       createdAt: getDateKey(),
     }])
   }, [])
@@ -97,12 +99,26 @@ export function useHabits() {
     }))
   }, [])
 
+  const setTime = useCallback((id, dateKey, minutes) => {
+    setHabits(prev => prev.map(h => {
+      if (h.id !== id) return h
+      const timeEntries = { ...(h.timeEntries || {}), [dateKey]: minutes }
+      const completedDates = minutes > 0
+        ? (h.completedDates.includes(dateKey) ? h.completedDates : [...h.completedDates, dateKey])
+        : h.completedDates.filter(d => d !== dateKey)
+      if (minutes <= 0) delete timeEntries[dateKey]
+      return { ...h, timeEntries, completedDates }
+    }))
+  }, [])
+
   const habitsWithStats = habits.map(h => ({
     ...h,
+    type: h.type || 'check',
+    timeEntries: h.timeEntries || {},
     currentStreak: getStreak(h.completedDates),
     longestStreak: getLongestStreak(h.completedDates),
     isCompletedToday: h.completedDates.includes(getDateKey()),
   }))
 
-  return { habits: habitsWithStats, addHabit, deleteHabit, toggleDay, getDateKey }
+  return { habits: habitsWithStats, addHabit, deleteHabit, toggleDay, setTime, getDateKey }
 }

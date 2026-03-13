@@ -7,10 +7,15 @@
 
 .grid-header {
   display: grid;
-  grid-template-columns: 1fr repeat(7, 48px);
+  grid-template-columns: 1fr repeat(7, 48px) 52px;
   gap: 2px;
   padding: 12px 16px 8px;
   border-bottom: 1px solid var(--border);
+}
+
+.pct-header {
+  justify-content: center;
+  align-items: center;
 }
 
 .grid-habit-label {
@@ -55,7 +60,7 @@
 
 .grid-row {
   display: grid;
-  grid-template-columns: 1fr repeat(7, 48px);
+  grid-template-columns: 1fr repeat(7, 48px) 52px;
   gap: 2px;
   padding: 8px 16px;
   align-items: center;
@@ -113,10 +118,74 @@
   border-color: var(--border);
 }
 
+.grid-cell.future {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.grid-pct {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-pct.perfect {
+  color: var(--habit-color);
+}
+
+.grid-pct.timed-total {
+  font-size: 0.7rem;
+  color: var(--habit-color);
+}
+
+.grid-cell.timed {
+  padding: 0;
+}
+
+.grid-time-btn {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: 8px;
+}
+
+.grid-cell.timed.completed .grid-time-btn {
+  color: white;
+}
+
+.grid-time-input {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--habit-color);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.grid-time-input::-webkit-inner-spin-button,
+.grid-time-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 @media (max-width: 600px) {
   .grid-header,
   .grid-row {
-    grid-template-columns: 1fr repeat(7, 40px);
+    grid-template-columns: 1fr repeat(7, 40px) 44px;
     padding: 8px 10px;
   }
 
