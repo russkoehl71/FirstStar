@@ -46,7 +46,7 @@ function App() {
               className={`toggle-btn ${view === 'cards' ? 'active' : ''}`}
               onClick={() => setView('cards')}
             >
-              Today
+              Cards
             </button>
             <button
               className={`toggle-btn ${view === 'weekly' ? 'active' : ''}`}
